@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
-import { TypeAnimation } from 'react-type-animation';
+
 import {Swiper,SwiperSlide} from 'swiper/react';
 import 'swiper/css/bundle'
 import SwiperCore from 'swiper';
