@@ -79,7 +79,7 @@ app.post('/api/send-otp',(req,res) => {
 
     // Send OTP via email
     const mailOptions = {
-      from: process.env.EMAIL_ID,  // replace with your email
+      from: process.env.MY_EMAIL,  // replace with your email
       to: email,
       subject: 'Your OTP Code',
       text:`Your OTP code is ${otpp} from NestQuest. It is valid for 10 minutes.`
