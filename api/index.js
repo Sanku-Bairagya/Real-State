@@ -13,6 +13,7 @@ import bcryptjs from "bcryptjs"
 import User from "./models/user.model.js"
 import path from "path"
 
+
 dotenv.config();
 
 const app = express();
@@ -72,12 +73,16 @@ app.post('/api/send-otp',(req,res) => {
     }
 
     //generating a random 6 digit code
+
     const otpp = crypto.randomInt(100000,999999).toString();
 
+
     //store OTP with a timestamp of 10 minutes
+
     otpStore[email] = {otpp, timeStamp:Date.now()};
 
     // Send OTP via email
+
     const mailOptions = {
       from: process.env.MY_EMAIL,  // replace with your email
       to: email,
@@ -99,9 +104,9 @@ app.post('/api/send-otp',(req,res) => {
 })
 
 app.post('/api/verify-otp', (req, res) => {
-    const { email, otp } = req.body;
+    const { email, finalotp } = req.body;
   
-    if (!email || !otp) {
+    if (!email || !finalotp) {
       return res.status(400).json({ success: false, message: 'Email and OTP are required' });
     }
     const storedOtpDetails = otpStore[email];
@@ -114,7 +119,7 @@ app.post('/api/verify-otp', (req, res) => {
     
     // Check if OTP is valid 
 
-    if (otp === storedOtp && (Date.now() - timeStamp) < 10 * 60 * 1000) { // 1 minutes of OTP validations
+    if (finalotp === storedOtp && (Date.now() - timeStamp) < 10 * 60 * 1000) { // 10 minutes of OTP validations
       delete otpStore[email];  // Remove OTP after successful verification
 
       return res.status(200).json({ success: true, message: 'OTP verified successfully' });
